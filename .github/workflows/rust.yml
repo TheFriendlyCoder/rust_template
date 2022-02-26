@@ -1,5 +1,7 @@
 name: Rust
 
+# TODO: run build on every push regardless of branch
+#       may run into problems publishing artifacts
 on:
   push:
     branches: [ main ]
@@ -36,6 +38,7 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
   
+  # TODO: build and publish 3 separate binaries, for each major OS platform
   # TODO: build and publish release builds when triggered from a tag
   # TODO: publish crates to crates.io and packages to github
   # TODO: publish user docs to GH pages
@@ -47,11 +50,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build
+    - name: Build Linux
       run: cargo build --verbose
-    - name: Publish
+    - name: Publish Linux
       uses: actions/upload-artifact@v2
       with:
-        name: sample_linux
+        name: linux
+        path: target/debug/sample
+
+    - name: Build MacOS
+      run: |
+        rustup target add aarch64-apple-darwin
+        cargo build --verbose
+    - name: Publish MacOS
+      uses: actions/upload-artifact@v2
+      with:
+        name: macos
         path: target/debug/sample
         
