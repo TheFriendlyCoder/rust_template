@@ -38,7 +38,21 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
   
-  # TODO: build and publish 3 separate binaries, for each major OS platform
+  ksptest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions-rs/cargo@v1
+      with:
+        command: build
+        args: --target=x86_64-apple-darwin --verbose
+        use-cross: true
+    - name: Publish ksptest
+      uses: actions/upload-artifact@v2
+      with:
+        name: ksptest_macos
+        path: target/debug/sample
+
   # TODO: build and publish release builds when triggered from a tag
   # TODO: publish crates to crates.io and packages to github
   # TODO: publish user docs to GH pages
@@ -49,7 +63,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        #os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v2
