@@ -36,12 +36,13 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
   
-  # TODO: have publish only run when precheck + test pass
   # TODO: build and publish release builds when triggered from a tag
   # TODO: publish crates to crates.io and packages to github
   # TODO: publish user docs to GH pages
   # TODO: publish API docs to docs.rs
   publish-dev:
+    # Only publish when previous build steps finish successfully
+    needs: [precheck, test]
     runs-on: ubuntu-latest
 
     steps:
