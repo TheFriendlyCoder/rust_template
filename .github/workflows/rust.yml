@@ -20,7 +20,8 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         args: --all-features
     - name: Check code style
-      run: rustfmt --check ./src/**/*.rs
+      # run: rustfmt --check ./src/**/*.rs
+      run: ls -alh
 
   build:
 
