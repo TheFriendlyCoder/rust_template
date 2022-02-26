@@ -21,9 +21,9 @@ jobs:
         args: --all-features
     - name: Check code style
       # run: rustfmt --check ./src/**/*.rs
-      run: ls -alh ./src
+      run: ls -alh ./src/*.rs
 
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -32,6 +32,7 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
   
+  # TODO: have publish only run when precheck + test pass
   publish-dev:
     runs-on: ubuntu-latest
 
