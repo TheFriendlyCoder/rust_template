@@ -2,5 +2,8 @@
 #![deny(clippy::all)]
 
 fn main() {
-    println!("Hello, world!");
+    let val = true;
+    if val {
+        println!("Hello, world!");
+        }
 }
