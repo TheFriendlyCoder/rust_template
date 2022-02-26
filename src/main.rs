@@ -1,3 +1,6 @@
 fn main() {
-    println!("Hello, world2!");
+    let fubar = false;
+    if fubar == false {
+        println!("Hello, world2!");
+    }
 }
