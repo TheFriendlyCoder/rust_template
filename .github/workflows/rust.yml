@@ -20,8 +20,12 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         args: --all-features
     - name: Check code style
+      # TODO: find out why Ubuntu refuses to 
       # run: rustfmt --check ./src/**/*.rs
-      run: ls -alh ./src/**/*.rs
+      # run: rustfmt --check ./src/*.rs
+      run: |
+        shopt -s globstar
+        rustfmt --check ./src/**/*.rs
 
   test:
 
