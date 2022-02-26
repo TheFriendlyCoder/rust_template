@@ -19,9 +19,12 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Run Linter
-      run: cargo clippy --verbose
-    - name: Check code style
-      run: rustfmt --check ./src/**/*.rs
+      uses: actions-rs/clippy-check@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        args: --all-features
+    # - name: Check code style
+    #   run: rustfmt --check ./src/**/*.rs
     - name: Run tests
       run: cargo test --verbose
     - name: Publish
