@@ -1,8 +1,8 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let fubar = false;
-    if !fubar {
+    let temp = false;
+    if !temp {
         println!("Hello, world2!");
     }
 }
