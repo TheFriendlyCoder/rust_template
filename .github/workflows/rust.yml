@@ -23,9 +23,9 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
     - name: Publish
-       uses: actions/upload-artifact@v2
-       with:
-         name: sample_linux
-         path: target/debug/sample
+      uses: actions/upload-artifact@v2
+      with:
+        name: sample_linux
+        path: target/debug/sample
         
 
