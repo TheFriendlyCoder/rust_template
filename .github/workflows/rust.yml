@@ -46,27 +46,17 @@ jobs:
   publish-dev:
     # Only publish when previous build steps finish successfully
     needs: [precheck, test]
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build Linux
-      # similar to: cargo build --target=x86_64-unknown-linux-gnu --verbose
+    - name: Build ${{ matrix.os }}
       run: cargo build --verbose
-    - name: Publish Linux
+    - name: Publish ${{ matrix.os }}
       uses: actions/upload-artifact@v2
       with:
-        name: linux
+        name: ${{ matrix.os }}
         path: target/debug/sample
-
-    - name: Build MacOS
-      run: |
-        apt install -y clang gcc g++ zlib1g-dev libmpc-dev libmpfr-dev libgmp-dev
-        rustup target add x86_64-apple-darwin
-        cargo build --target=x86_64-apple-darwin --verbose
-    - name: Publish MacOS
-      uses: actions/upload-artifact@v2
-      with:
-        name: macos
-        path: target/debug/sample
-        
