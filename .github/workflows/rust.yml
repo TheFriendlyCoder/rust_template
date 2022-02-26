@@ -20,9 +20,9 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         args: --all-features
     - name: Check code style
-      # TODO: find out why Ubuntu refuses to 
-      # run: rustfmt --check ./src/**/*.rs
-      # run: rustfmt --check ./src/*.rs
+      # NOTE: we have to set the BASH shell option 'globstar'
+      #       for the **/*.rs syntax to work. Apparently this
+      #       feature is disabled by default for some reason
       run: |
         shopt -s globstar
         rustfmt --check ./src/**/*.rs
