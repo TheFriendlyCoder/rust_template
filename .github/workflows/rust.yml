@@ -29,13 +29,12 @@ jobs:
         shopt -s globstar
         rustfmt --check ./src/**/*.rs
 
-  # TODO: add code coverage check to this build stage
   test:
 
     runs-on: ubuntu-latest
 
     steps:
-    # - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
     # - name: Run tests
     #   run: cargo test --verbose
 
@@ -43,7 +42,7 @@ jobs:
       uses: actions-rs/tarpaulin@v0.1
       with:
         version: '0.15.0'
-        args: '-- --test-threads 1'
+        args: '-- --test-threads 1 --fail-under 90'
 
     - name: Archive code coverage results
       uses: actions/upload-artifact@v1
@@ -56,7 +55,7 @@ jobs:
     #   uses: codecov/codecov-action@v1.0.2
     #   with:
     #     token: ${{secrets.CODECOV_TOKEN}}
-    
+
   # TODO: build and publish release builds when triggered from a tag
   # TODO: publish crates to crates.io and packages to github
   # TODO: publish user docs to GH pages
