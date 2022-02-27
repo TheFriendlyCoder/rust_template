@@ -35,10 +35,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-      run: cargo test --verbose
+    # - uses: actions/checkout@v2
+    # - name: Run tests
+    #   run: cargo test --verbose
 
+    - name: Run cargo-tarpaulin
+      uses: actions-rs/tarpaulin@v0.1
+      with:
+        version: '0.15.0'
+        args: '-- --test-threads 1'
+
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v1
+      with:
+        name: code-coverage-report
+        path: cobertura.xml
+
+    # TODO: upload to codecov.io
+    # - name: Upload to codecov.io
+    #   uses: codecov/codecov-action@v1.0.2
+    #   with:
+    #     token: ${{secrets.CODECOV_TOKEN}}
+    
   # TODO: build and publish release builds when triggered from a tag
   # TODO: publish crates to crates.io and packages to github
   # TODO: publish user docs to GH pages
