@@ -26,3 +26,9 @@ fn usage() -> TestResult {
     }
     Ok(())
 }
+
+#[test]
+fn cli_failure() -> TestResult {
+    Command::cargo_bin("sample")?.assert().failure();
+    Ok(())
+}

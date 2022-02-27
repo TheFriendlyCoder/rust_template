@@ -32,6 +32,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    # TODO: figure out why lib.rs isn't being included in coverage
+
     steps:
       - uses: actions/checkout@v2
       # - name: Run tests
@@ -40,8 +42,8 @@ jobs:
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1
         with:
-          version: "0.15.0"
-          args: "-- --test-threads 1"
+          version: "0.19.1"
+          args: "-- --test-threads 1 --fail-under 50"
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
