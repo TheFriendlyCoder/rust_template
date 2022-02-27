@@ -2,5 +2,9 @@
 #![deny(clippy::all)]
 
 fn main() {
-    println!("Hello, world!");
+    if let Err(e) = sample::run() {
+        eprintln!("{}", e);
+
+        std::process::exit(1);
+    }
 }
