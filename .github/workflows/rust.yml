@@ -33,17 +33,24 @@ jobs:
     runs-on: ubuntu-latest
 
     # TODO: figure out why lib.rs isn't being included in coverage
+    container:
+      image: xd009642/tarpaulin:develop-nightly
+      options: --security-opt seccomp=unconfined
 
     steps:
       - uses: actions/checkout@v2
       # - name: Run tests
       #   run: cargo test --verbose
 
-      - name: Run cargo-tarpaulin
-        uses: actions-rs/tarpaulin@v0.1
-        with:
-          version: "0.19.1"
-          args: "-- --test-threads 1 --fail-under 50"
+      - name: Generate code coverage
+        run: |
+          cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --out Xml --fail-under 60
+
+      # - name: Run cargo-tarpaulin
+      #   uses: actions-rs/tarpaulin@v0.1
+      #   with:
+      #     version: "0.19.1"
+      #     args: "-- --test-threads 1 --fail-under 50"
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
