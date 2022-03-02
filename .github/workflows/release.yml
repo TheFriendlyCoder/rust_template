@@ -16,13 +16,13 @@ jobs:
         job:
           - os: ubuntu-latest
             binary-suffix: ""
-            artifact-name: "sample"
+            asset-name: "sample"
           - os: macos-latest
             binary-suffix: ""
-            artifact-name: "sample_mac"
+            asset-name: "sample_mac"
           - os: windows-latest
             binary-suffix: ".exe"
-            artifact-name: "sample.exe"
+            asset-name: "sample.exe"
 
     steps:
       - name: Checkout sources
