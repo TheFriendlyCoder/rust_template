@@ -15,11 +15,14 @@ jobs:
       matrix:
         job:
           - os: ubuntu-latest
-            binary-postfix: ""
+            binary-suffix: ""
+            artifact-name: "sample"
           - os: macos-latest
-            binary-postfix: ""
+            binary-suffix: ""
+            artifact-name: "sample_mac"
           - os: windows-latest
-            binary-postfix: ".exe"
+            binary-suffix: ".exe"
+            artifact-name: "sample.exe"
 
     steps:
       - name: Checkout sources
@@ -38,8 +41,8 @@ jobs:
       - name: Release ${{ matrix.job.os }}
         uses: svenstaro/upload-release-action@v2
         with:
-          file: target/debug/sample${{ matrix.job.binary-postfix }}
-          asset_name: sample_${{ matrix.job.os }}
+          file: target/debug/sample${{ matrix.job.binary-suffix }}
+          asset_name: ${{ matrix.job.asset-name }}
           tag: ${{ github.ref }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
