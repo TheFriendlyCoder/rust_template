@@ -2,7 +2,7 @@ on:
   push:
     # Pattern matched against refs/tags
     tags:
-      - "*" # Push events to every tag not containing /
+      - "[v]?[0-9]+.[0-9]+.[0-9]+"
   workflow_dispatch:
 
 name: Publish
@@ -10,11 +10,16 @@ name: Publish
 jobs:
   publish:
     name: Publish
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.job.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        # os: [ubuntu-latest]
+        job:
+          - os: ubuntu-latest
+            binary-postfix: ""
+          - os: macos-latest
+            binary-postfix: ""
+          - os: windows-latest
+            binary-postfix: ".exe"
 
     steps:
       - name: Checkout sources
@@ -27,13 +32,13 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Build ${{ matrix.os }}
+      - name: Build ${{ matrix.job.os }}
         run: cargo build --verbose
 
-      - name: Release ${{ matrix.os }}
+      - name: Release ${{ matrix.job.os }}
         uses: softprops/action-gh-release@v1
         with:
-          files: target/debug/sample
+          files: target/debug/sample${{ matrix.job.binary-postfix }}
 
       # - run: cargo publish --token ${CRATES_TOKEN} --dry-run
       #   env:
