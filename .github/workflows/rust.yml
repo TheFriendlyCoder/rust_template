@@ -78,17 +78,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        # os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v2
       - name: Build ${{ matrix.os }}
         run: cargo build --verbose
-      - name: Publish ${{ matrix.os }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.os }}
-          path: target/debug/sample
+      # - name: Publish ${{ matrix.os }}
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ${{ matrix.os }}
+      #     path: target/debug/sample
       - name: Release ${{ matrix.os }}
         uses: softprops/action-gh-release@v1
         with:
