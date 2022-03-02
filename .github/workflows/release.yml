@@ -36,9 +36,12 @@ jobs:
         run: cargo build --verbose
 
       - name: Release ${{ matrix.job.os }}
-        uses: softprops/action-gh-release@v1
+        uses: svenstaro/upload-release-action@v2
         with:
-          files: target/debug/sample${{ matrix.job.binary-postfix }}
+          file: target/debug/sample${{ matrix.job.binary-postfix }}
+          asset_name: sample_${{ matrix.job.os }}
+          tag: ${{ github.ref }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
       # - run: cargo publish --token ${CRATES_TOKEN} --dry-run
       #   env:

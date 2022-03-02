@@ -90,7 +90,7 @@ jobs:
       #   with:
       #     name: ${{ matrix.os }}
       #     path: target/debug/sample
-      - name: Release ${{ matrix.os }}
-        uses: softprops/action-gh-release@v1
-        with:
-          files: target/debug/sample
+      # - name: Release ${{ matrix.os }}
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     files: target/debug/sample
